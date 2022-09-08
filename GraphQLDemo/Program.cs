@@ -1,7 +1,9 @@
 using GraphQL;
-using GraphQLDemo.DbAcess;
+using GraphQLDemo.Contacts;
+using GraphQLDemo.Context;
 using GraphQLDemo.Extensions;
 using GraphQLDemo.GraphQlSchema;
+using GraphQLDemo.Repository;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -12,10 +14,12 @@ builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
-builder.Services.AddDbContext<UserDbContext>(op =>
+builder.Services.AddDbContext<ApplicationContext>(op =>
 {
     op.UseNpgsql(builder.Configuration["ConnectionStrings:DefaultConnection"]);
 }, ServiceLifetime.Singleton);
+builder.Services.AddSingleton<IUserRepository, UserRepository>();
+builder.Services.AddSingleton<IAccountRepository, AccountRepository>();
 builder.Services.AddScoped<GraphSchema>();
 builder.Services.AddGraphQL(options => {
     options.AddSystemTextJson();
