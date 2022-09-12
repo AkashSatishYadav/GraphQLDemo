@@ -13,6 +13,13 @@ namespace GraphQLDemo.Repository
             _context = context;
         }
 
+        public User CreateUser(User user)
+        {
+            _context.Add(user);
+            _context.SaveChanges();
+            return user;
+        }
+
         public List<User> GetAllUsers()
         {
             return _context.users.ToList();

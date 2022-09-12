@@ -6,5 +6,6 @@ namespace GraphQLDemo.Contacts
     {
         List<User> GetAllUsers();
         User GetUser(int id);
+        User CreateUser(User user);
     }
 }
